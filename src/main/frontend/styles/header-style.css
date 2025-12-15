@@ -1,0 +1,36 @@
+.header-layout {
+    padding: 0.5rem 1.5rem;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+.header-logo-text {
+    font-size: 1.4rem;
+    font-weight: 700;
+    font-family: 'Poppins', sans-serif;
+    padding-left: 0.5rem;
+    color: #293790;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #333;
+    font-weight: 500;
+    padding: 0 0.8rem;
+    font-family: 'Poppins', sans-serif;
+}
+
+.nav-links a:hover {
+    color: #0d6efd;
+}
+
+.enroll-button {
+    background-color: #293790;
+    color: white;
+    font-weight: bold;
+    border-radius: 5px;
+    font-family: 'Poppins', sans-serif;
+}

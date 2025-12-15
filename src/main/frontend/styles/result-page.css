@@ -1,0 +1,13 @@
+.result-page h1 {
+    color: #2E86C1;
+    font-size: 32px;
+    margin-bottom: 0;
+}
+
+.result-page span {
+    color: #333;
+}
+
+.result-page .progress-bar {
+    margin-bottom: 1rem;
+}
