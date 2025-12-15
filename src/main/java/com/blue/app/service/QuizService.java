@@ -42,6 +42,10 @@ public class QuizService {
         return quizRepository.findAll().get((int)(Math.random()*quizRepository.count()));
     }
 
+    public long countQuizzes() {
+        return quizRepository.count();
+    }
+
     public void calculateScores(Attempt attempt, List<Response> responses) {
         int totalA1 = 0, correctA1 = 0;
         int totalA2 = 0, correctA2 = 0;

@@ -71,6 +71,10 @@ public class QuestionService {
         return questionRepository.findAll();
     }
 
+    public long countQuestions() {
+        return questionRepository.count();
+    }
+
     public List<Question> getRandomQuestions(){
         /*
         List<Question> basic = questionRepository.find10RandomBasicQuestions();
