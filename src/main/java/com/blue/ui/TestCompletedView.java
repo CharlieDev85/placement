@@ -102,11 +102,11 @@ public class TestCompletedView extends VerticalLayout {
 
         // Provide feedback based on the strongest level
         return switch (level) {
-            case "A1" -> "You’re building a strong foundation in English. Let’s continue strengthening your basic skills!";
-            case "A2" -> "Great! You’re moving confidently through the basics. Time to push into more complex language!";
-            case "B1" -> "You’re comfortable with intermediate English. Let’s work on mastering it and moving forward!";
-            case "B2" -> "Excellent work! You’re approaching fluency and ready to handle advanced conversations and content!";
-            default -> "Thank you for completing the test! Keep practicing and improving every day.";
+            case "A1" -> "¡Buen comienzo! Estás construyendo una base sólida en inglés. Sigamos fortaleciendo esas habilidades esenciales. ¡Estás en el camino correcto!";
+            case "A2" -> "¡Genial! Te mueves con seguridad por lo básico. Es el momento perfecto para dar el siguiente paso hacia un inglés más completo. ¡Sigue así!";
+            case "B1" -> "¡Muy bien! Tienes un buen dominio del inglés intermedio. Trabajemos juntos para llevar tu nivel al siguiente escalón. ¡Tú puedes!";
+            case "B2" -> "¡Excelente trabajo! Estás muy cerca de la fluidez. Ya puedes manejar conversaciones avanzadas con confianza. ¡Aprovecha este impulso y da el salto final!";
+            default -> "¡Gracias por completar el test! Cada paso cuenta en tu camino hacia el dominio del inglés. ¡Sigue practicando y creciendo!";
         };
     }
 
