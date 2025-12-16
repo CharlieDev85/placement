@@ -11,11 +11,17 @@ public class Recommendation {
     @Column(name = "quiz_id")
     private Long id;
     private String result;
-    private String scheduleChosen;
-    private String recommendedCourse;
+    @Enumerated(EnumType.STRING)
+    private Schedule scheduleChosen;
+    @Enumerated(EnumType.STRING)
+    private Course recommendedCourse;
     private String startingDate;
     private BigDecimal percentage;
 
+    public Recommendation(String result, Schedule scheduleChosen) {
+        this.result = result;
+        this.scheduleChosen = scheduleChosen;
+    }
     public Recommendation(){}
 
     public Long getId() {
@@ -34,19 +40,19 @@ public class Recommendation {
         this.result = result;
     }
 
-    public String getScheduleChosen() {
+    public Schedule getScheduleChosen() {
         return scheduleChosen;
     }
 
-    public void setScheduleChosen(String scheduleChosen) {
+    public void setScheduleChosen(Schedule scheduleChosen) {
         this.scheduleChosen = scheduleChosen;
     }
 
-    public String getRecommendedCourse() {
+    public Course getRecommendedCourse() {
         return recommendedCourse;
     }
 
-    public void setRecommendedCourse(String recommendedCourse) {
+    public void setRecommendedCourse(Course recommendedCourse) {
         this.recommendedCourse = recommendedCourse;
     }
 

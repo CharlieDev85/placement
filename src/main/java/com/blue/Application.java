@@ -2,6 +2,7 @@ package com.blue;
 
 import com.blue.app.service.QuestionService;
 import com.blue.app.service.QuizService;
+import com.blue.app.service.RecommendationService;
 import com.vaadin.flow.component.page.AppShellConfigurator;
 import com.vaadin.flow.theme.Theme;
 import org.slf4j.Logger;
@@ -24,10 +25,11 @@ public class Application implements AppShellConfigurator {
 
     @Bean
     @Profile("dev")
-    public CommandLineRunner dataSeeder(QuestionService questionService, QuizService quizService) {
+    public CommandLineRunner dataSeeder(QuestionService questionService, QuizService quizService, RecommendationService recommendationService) {
         return args -> {
             long questionCount = questionService.countQuestions();
             long quizCount = quizService.countQuizzes();
+            long recommendationCount = recommendationService.countRecommendations();
 
             if (questionCount == 0 && quizCount == 0) {
                 log.info("Seeding database with questions and quizzes");
@@ -36,6 +38,11 @@ public class Application implements AppShellConfigurator {
                 log.info("Seeding completed");
             } else {
                 log.info("Skipping seeding: existing questions={} quizzes={}", questionCount, quizCount);
+            }
+
+            if(recommendationCount == 0){
+                log.info("Seeding database with recommendations");
+                recommendationService.seed();
             }
         };
     }
