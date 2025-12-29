@@ -11,6 +11,7 @@ import com.vaadin.flow.component.sidenav.SideNavItem;
 import com.vaadin.flow.router.Layout;
 import com.vaadin.flow.theme.lumo.LumoUtility;
 
+
 @Layout
 public class BasicLayout extends AppLayout {
 

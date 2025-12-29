@@ -164,8 +164,8 @@ public class QuizView extends VerticalLayout {
         }
 
         question = quiz.getQuestions().get(index);
-        //todo: remove the question number text
-        questionTitle.setText("Question " + (index + 1));
+        //remove the question number text
+        //questionTitle.setText("Question " + (index + 1));
         questionText.setText(question.getQuestion());
         options.setItems(question.getOptionA(), question.getOptionB(), question.getOptionC(), question.getOptionD());
         options.clear();

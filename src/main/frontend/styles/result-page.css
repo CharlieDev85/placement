@@ -11,3 +11,71 @@
 .result-page .progress-bar {
     margin-bottom: 1rem;
 }
+.result-subtitle {
+    font-size: 18px;
+    opacity: 0.9;
+    margin-bottom: 12px;
+}
+
+/* Chat container */
+.chat-container {
+    width: min(720px, 92vw);
+    margin-top: 18px;
+    padding: 14px;
+    border-radius: 16px;
+    background: rgba(255,255,255,0.85);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+}
+
+/* Header */
+.chat-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 10px;
+}
+
+.chat-avatar {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.chat-header-text {
+    display: flex;
+    flex-direction: column;
+    font-weight: 600;
+}
+
+.chat-role {
+    font-size: 12px;
+    opacity: 0.75;
+    font-weight: 500;
+}
+
+/* Bubble */
+.chat-bubble {
+    background: white;
+    border-radius: 16px;
+    padding: 14px 16px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+    line-height: 1.4;
+}
+
+/* Typing */
+.typing {
+    font-size: 14px;
+    opacity: 0.75;
+    font-style: italic;
+}
+
+/* Message */
+.chat-message {
+    font-size: 15px;
+}
+
+.cta-row {
+    margin-top: 16px;
+    gap: 10px;
+}
