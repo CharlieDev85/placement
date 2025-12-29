@@ -74,6 +74,7 @@ public class QuizView extends VerticalLayout {
         this.quizService = quizService;
         this.studentSession = studentSession;
         this.attemptSession = attemptSession;
+        //todo: add timer
 
 
         setSizeFull();
@@ -163,6 +164,7 @@ public class QuizView extends VerticalLayout {
         }
 
         question = quiz.getQuestions().get(index);
+        //todo: remove the question number text
         questionTitle.setText("Question " + (index + 1));
         questionText.setText(question.getQuestion());
         options.setItems(question.getOptionA(), question.getOptionB(), question.getOptionC(), question.getOptionD());

@@ -1,6 +1,7 @@
 package com.blue.ui;
 
 import com.blue.app.model.Attempt;
+import com.blue.app.model.Result;
 import com.blue.app.model.Student;
 import com.blue.app.service.AttemptService;
 import com.blue.app.session.AttemptSession;
@@ -118,22 +119,23 @@ public class TestCompletedView extends VerticalLayout {
         BigDecimal scoreB1 = attempt.getScoreB1();
         BigDecimal scoreB2 = attempt.getScoreB2();
         BigDecimal max = scoreA1;
-        String level = "A1";
+        Result result = Result.A1;
 
         if (scoreA2.compareTo(max) > 0) {
             max = scoreA2;
-            level = "A2";
+            result = Result.A2;
         }
         if (scoreB1.compareTo(max) > 0) {
             max = scoreB1;
-            level = "B1";
+            result = Result.B1;
         }
         if (scoreB2.compareTo(max) > 0) {
             max = scoreB2;
-            level = "B2";
+            result = Result.B2;
         }
+        attempt.setResult(result);
         String subtitleText;
-        switch (level) {
+        switch (result.getDisplayName()) {
             case "A1" -> subtitleText = "BASIC";
             case "A2" -> subtitleText = "BASIC";
             case "B1" -> subtitleText = "INTERMEDIATE";
@@ -161,7 +163,7 @@ public class TestCompletedView extends VerticalLayout {
         Span title = new Span("NIVEL");
         title.getStyle().set("font-size", "12px").set("color", "white");
 
-        Span levelSpan = new Span(level);
+        Span levelSpan = new Span(result.getDisplayName());
         levelSpan.getStyle().set("font-size", "48px").set("font-weight", "bold").set("color", "white");
 
         Span subtitle = new Span(subtitleText);

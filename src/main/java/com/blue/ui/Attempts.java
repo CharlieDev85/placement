@@ -21,6 +21,7 @@ public class Attempts extends VerticalLayout {
 
     @Autowired
     public Attempts(AttemptService attemptService) {
+        //todo: add duration
         this.attemptService = attemptService;
 
         setSizeFull();

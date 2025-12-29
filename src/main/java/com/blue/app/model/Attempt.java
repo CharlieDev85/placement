@@ -22,6 +22,18 @@ public class Attempt {
     private BigDecimal scoreA2;
     private BigDecimal scoreB1;
     private BigDecimal scoreB2;
+    private Result result;
+
+    public Attempt() {
+    }
+
+    public Result getResult() {
+        return result;
+    }
+
+    public void setResult(Result result) {
+        this.result = result;
+    }
 
     public Student getStudent() {
         return student;
