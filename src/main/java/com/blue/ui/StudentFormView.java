@@ -1,5 +1,6 @@
 package com.blue.ui;
 
+import com.blue.app.model.Schedule;
 import com.blue.app.model.Student;
 import com.blue.app.service.StudentService;
 import com.blue.app.session.StudentSession;
@@ -55,9 +56,11 @@ public class StudentFormView extends VerticalLayout {
         NumberField whatsappField = new NumberField("Número de Whatsapp");
         whatsappField.setWidthFull();
 
-        CheckboxGroup<String> scheduleGroup = new CheckboxGroup<>();
+        CheckboxGroup<Schedule> scheduleGroup = new CheckboxGroup<>();
         scheduleGroup.setLabel("Horario de preferencia");
-        scheduleGroup.setItems("De 7:00 pm a 8:00 pm", "De 8:00 pm a 9:00 pm");
+        scheduleGroup.setItems(Schedule.values());
+        scheduleGroup.setItemLabelGenerator(Schedule::getDisplayName);
+        //scheduleGroup.setItems("De 7:00 pm a 8:00 pm", "De 8:00 pm a 9:00 pm");
         scheduleGroup.addThemeName("vertical");
         scheduleGroup.setWidthFull();
 

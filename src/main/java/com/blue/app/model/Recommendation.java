@@ -3,6 +3,7 @@ package com.blue.app.model;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 
 @Entity
 public class Recommendation {
@@ -10,15 +11,16 @@ public class Recommendation {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "quiz_id")
     private Long id;
-    private String result;
+    @Enumerated(EnumType.STRING)
+    private Result result;
     @Enumerated(EnumType.STRING)
     private Schedule scheduleChosen;
     @Enumerated(EnumType.STRING)
     private Course recommendedCourse;
-    private String startingDate;
+    private LocalDate startingDate;
     private BigDecimal percentage;
 
-    public Recommendation(String result, Schedule scheduleChosen) {
+    public Recommendation(Result result, Schedule scheduleChosen) {
         this.result = result;
         this.scheduleChosen = scheduleChosen;
     }
@@ -32,11 +34,11 @@ public class Recommendation {
         this.id = id;
     }
 
-    public String getResult() {
+    public Result getResult() {
         return result;
     }
 
-    public void setResult(String result) {
+    public void setResult(Result result) {
         this.result = result;
     }
 
@@ -56,11 +58,11 @@ public class Recommendation {
         this.recommendedCourse = recommendedCourse;
     }
 
-    public String getStartingDate() {
+    public LocalDate getStartingDate() {
         return startingDate;
     }
 
-    public void setStartingDate(String startingDate) {
+    public void setStartingDate(LocalDate startingDate) {
         this.startingDate = startingDate;
     }
 

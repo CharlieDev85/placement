@@ -11,7 +11,6 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Profile;
 
 @SpringBootApplication
 @Theme("default")
@@ -24,7 +23,7 @@ public class Application implements AppShellConfigurator {
     }
 
     @Bean
-    @Profile("dev")
+    //@Profile("dev")
     public CommandLineRunner dataSeeder(QuestionService questionService, QuizService quizService, RecommendationService recommendationService) {
         return args -> {
             long questionCount = questionService.countQuestions();

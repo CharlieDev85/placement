@@ -16,7 +16,7 @@ public class Student {
     private String name;
     private String email;
     private String whatsappNum;
-    private List<String> schedulesPref;
+    private List<Schedule> schedulesPref;
     private String ageRange;
 
     public Student() {
@@ -46,11 +46,11 @@ public class Student {
         this.email = email;
     }
 
-    public List<String> getSchedulesPref() {
+    public List<Schedule> getSchedulesPref() {
         return schedulesPref;
     }
 
-    public void setSchedulesPref(List<String> schedulesPref) {
+    public void setSchedulesPref(List<Schedule> schedulesPref) {
         this.schedulesPref = schedulesPref;
     }
 

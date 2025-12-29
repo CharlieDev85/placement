@@ -1,17 +1,17 @@
 package com.blue.app.model;
 
-public enum Schedule {
-    From7PMto8PM("7 PM - 8 PM"),
-    From8PMto9PM("8 PM - 9 PM"),;
+public enum Result {
+    A1("A1"),
+    A2("A2"),
+    B1("B1"),
+    B2("B2");
 
     private final String displayName;
 
-    Schedule(String displayName) {
+    Result(String displayName) {
         this.displayName = displayName;
     }
-
     public String getDisplayName() {
         return displayName;
     }
-
 }

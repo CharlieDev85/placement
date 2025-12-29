@@ -19,6 +19,8 @@ import com.vaadin.flow.router.Route;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.math.BigDecimal;
+import java.util.Arrays;
+import java.util.stream.Collectors;
 
 @Route("test-completed")
 @CssImport("./styles/result-page.css")
@@ -34,7 +36,7 @@ public class TestCompletedView extends VerticalLayout {
         Student student = studentSession.getStudent();
         Attempt attempt = attemptSession.getAttempt(); // implement this
 
-        H1 congrats = new H1("🎉 Congratulations, " + student.getName() + "!");
+        H1 congrats = new H1("🎉 Congratulations, " + toProperCase(student.getName()) + "!");
         Span subtitle = new Span("Has completado el examen de ubicación, tu resultado es:");
         subtitle.getStyle().set("font-size", "18px");
 
@@ -151,7 +153,7 @@ public class TestCompletedView extends VerticalLayout {
                 .set("background-color", "#4F81F7")
                 .set("color", "white")
                 .set("width", "150px")
-                .set("height", "180px")
+                .set("height", "100px")//height
                 .set("padding", "16px")
                 .set("text-align", "center");
 
@@ -167,6 +169,15 @@ public class TestCompletedView extends VerticalLayout {
 
         card.add(title, levelSpan, subtitle);
         return card;
+    }
+
+    public static String toProperCase(String input) {
+        if (input == null || input.isEmpty()) return input;
+
+        return Arrays.stream(input.toLowerCase().split(" "))
+                .map(word -> word.isEmpty() ? word :
+                        word.substring(0, 1).toUpperCase() + word.substring(1))
+                .collect(Collectors.joining(" "));
     }
 
 
