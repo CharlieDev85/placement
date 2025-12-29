@@ -100,11 +100,13 @@ public class TestCompletedView extends VerticalLayout {
         String messageHtml = buildAdvisorMessageHtml(student, attempt);
 
         UI ui = UI.getCurrent();
+        ui.setPollInterval(500);
         SCHEDULER.schedule(() -> {
             try {
                 ui.access(() -> {
                     bubble.removeAll();
                     bubble.add(new Html("<div class='chat-message'>" + messageHtml + "</div>"));
+                    ui.setPollInterval(-1);
                     //ui.push(); // if using @Push
                 });
             } catch (Exception ex) {
