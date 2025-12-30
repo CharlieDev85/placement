@@ -202,7 +202,7 @@ public class TestCompletedView extends VerticalLayout {
         String text = "Hola, soy " + toProperCase(student.getName())
                 + ". Ya hice el test, mi nivel es " + level.getDisplayName()
                 + " y me recomendaron " + course + " (" + schedule + ", inicio " + startDate + ")."
-                + " Quiero inscribirme 🙂";
+                + " Quiero más información. 🙂";
         String waUrl = "https://wa.me/" + phone + "?text=" + java.net.URLEncoder.encode(text, java.nio.charset.StandardCharsets.UTF_8);
 
         Button whatsappBtn = new Button("💬 Hablar por WhatsApp");
