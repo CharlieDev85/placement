@@ -95,7 +95,7 @@ public class TestCompletedView extends VerticalLayout {
         Div headerText = new Div();
         headerText.addClassName("chat-header-text");
         headerText.add(new Span("Blue Academy"));
-        Span role = new Span("Asesor/a • Recomendación personalizada");
+        Span role = new Span("Carlos - Asesor Académico");
         role.addClassName("chat-role");
         headerText.add(role);
 
