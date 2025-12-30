@@ -71,7 +71,7 @@ public class TestCompletedView extends VerticalLayout {
         Div chat = buildAdvisorChat(student, attempt);
 
         // CTA buttons (WhatsApp + Enroll)
-        HorizontalLayout ctas = buildCtas(student);
+        HorizontalLayout ctas = buildCtas(student, attempt);
 
         // Feedback summary
         Span summary = new Span(generateFeedback(attempt));
@@ -177,10 +177,32 @@ public class TestCompletedView extends VerticalLayout {
                 + "¿Te ayudo a reservar tu espacio? 💙";
     }
 
-    private HorizontalLayout buildCtas(Student student) {
+    private HorizontalLayout buildCtas(Student student, Attempt attempt) {
         // WhatsApp button (Anchor wrapping a Button)
         String phone = "50242281260"; // change later
-        String text = "Hola, soy " + toProperCase(student.getName()) + ". Ya hice el test y quiero inscribirme 🙂";
+        String course = "Curso por definir";
+        String schedule = "Horario por definir";
+        String startDate = "Fecha por definir";
+        if (recommendation != null) {
+            if (recommendation.getRecommendedCourse() != null) {
+                course = recommendation.getRecommendedCourse().getDisplayName();
+            }
+            if (recommendation.getScheduleChosen() != null) {
+                schedule = recommendation.getScheduleChosen().getDisplayName();
+            }
+            if (recommendation.getStartingDate() != null) {
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d 'de' MMMM, yyyy", new Locale("es", "ES"));
+                startDate = recommendation.getStartingDate().format(formatter);
+            }
+        }
+        Result level = attempt.getResult();
+        if (level == null) {
+            level = Result.A1;
+        }
+        String text = "Hola, soy " + toProperCase(student.getName())
+                + ". Ya hice el test, mi nivel es " + level.getDisplayName()
+                + " y me recomendaron " + course + " (" + schedule + ", inicio " + startDate + ")."
+                + " Quiero inscribirme 🙂";
         String waUrl = "https://wa.me/" + phone + "?text=" + java.net.URLEncoder.encode(text, java.nio.charset.StandardCharsets.UTF_8);
 
         Button whatsappBtn = new Button("💬 Hablar por WhatsApp");
