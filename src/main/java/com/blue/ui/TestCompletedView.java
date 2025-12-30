@@ -1,9 +1,14 @@
 package com.blue.ui;
 
 import com.blue.app.model.Attempt;
+import com.blue.app.model.Recommendation;
+import com.blue.app.model.RecommendationMade;
 import com.blue.app.model.Result;
+import com.blue.app.model.Schedule;
 import com.blue.app.model.Student;
+import com.blue.app.repository.RecommendationRepository;
 import com.blue.app.service.AttemptService;
+import com.blue.app.service.RecommendationMadeService;
 import com.blue.app.session.AttemptSession;
 import com.blue.app.session.StudentSession;
 import com.vaadin.flow.component.Html;
@@ -18,7 +23,10 @@ import com.vaadin.flow.router.Route;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.math.BigDecimal;
+import java.time.format.DateTimeFormatter;
 import java.util.Arrays;
+import java.util.List;
+import java.util.Locale;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -30,9 +38,15 @@ public class TestCompletedView extends VerticalLayout {
 
     private static final ScheduledExecutorService SCHEDULER =
             Executors.newSingleThreadScheduledExecutor();
+    private final RecommendationRepository recommendationRepository;
+    private final RecommendationMadeService recommendationMadeService;
+    private final Recommendation recommendation;
 
     @Autowired
-    public TestCompletedView(StudentSession studentSession, AttemptService attemptService, AttemptSession attemptSession) {
+    public TestCompletedView(StudentSession studentSession, AttemptService attemptService, AttemptSession attemptSession,
+                             RecommendationRepository recommendationRepository, RecommendationMadeService recommendationMadeService) {
+        this.recommendationRepository = recommendationRepository;
+        this.recommendationMadeService = recommendationMadeService;
         setSizeFull();
         setAlignItems(Alignment.CENTER);
         setJustifyContentMode(JustifyContentMode.CENTER);
@@ -49,6 +63,9 @@ public class TestCompletedView extends VerticalLayout {
 
         //get Result
         Div resultCard= this.getResult(attempt);
+        attemptService.save(attempt);
+        this.recommendation = resolveRecommendation(student, attempt);
+        saveRecommendationMade(attempt, recommendation);
 
         // --- Chat / Advisor section ---
         Div chat = buildAdvisorChat(student, attempt);
@@ -126,10 +143,21 @@ public class TestCompletedView extends VerticalLayout {
             level = Result.A1;
         }
 
-        // TODO later: replace these 3 with your Recommendation logic
-        String course = "Basic 4";
-        String schedule = "7:00 PM a 8:00 PM";
-        String startDate = "12 de enero, 2026";
+        String course = "Curso por definir";
+        String schedule = "Horario por definir";
+        String startDate = "Fecha por definir";
+        if (recommendation != null) {
+            if (recommendation.getRecommendedCourse() != null) {
+                course = recommendation.getRecommendedCourse().getDisplayName();
+            }
+            if (recommendation.getScheduleChosen() != null) {
+                schedule = recommendation.getScheduleChosen().getDisplayName();
+            }
+            if (recommendation.getStartingDate() != null) {
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d 'de' MMMM, yyyy", new Locale("es", "ES"));
+                startDate = recommendation.getStartingDate().format(formatter);
+            }
+        }
 
         String firstName = toProperCase(student.getName()).split(" ")[0];
 
@@ -276,5 +304,25 @@ public class TestCompletedView extends VerticalLayout {
                 .collect(Collectors.joining(" "));
     }
 
+    private Recommendation resolveRecommendation(Student student, Attempt attempt) {
+        List<Schedule> schedulesPref = student.getSchedulesPref();
+        if (schedulesPref == null || schedulesPref.isEmpty()) {
+            return null;
+        }
+        Schedule schedulePref = schedulesPref.get(0);
+        if (attempt.getResult() == null) {
+            return null;
+        }
+        return recommendationRepository
+                .findFirstByResultAndScheduleChosen(attempt.getResult(), schedulePref)
+                .orElse(null);
+    }
+
+    private void saveRecommendationMade(Attempt attempt, Recommendation recommendation) {
+        if (attempt == null || recommendation == null) {
+            return;
+        }
+        recommendationMadeService.save(new RecommendationMade(attempt, recommendation));
+    }
 
 }
