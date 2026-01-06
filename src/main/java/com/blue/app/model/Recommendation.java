@@ -16,6 +16,8 @@ public class Recommendation {
     @Enumerated(EnumType.STRING)
     private Schedule scheduleChosen;
     @Enumerated(EnumType.STRING)
+    private Schedule recommendedSchedule;
+    @Enumerated(EnumType.STRING)
     private Course recommendedCourse;
     private LocalDate startingDate;
     private BigDecimal percentage;
@@ -48,6 +50,14 @@ public class Recommendation {
 
     public void setScheduleChosen(Schedule scheduleChosen) {
         this.scheduleChosen = scheduleChosen;
+    }
+
+    public Schedule getRecommendedSchedule() {
+        return recommendedSchedule;
+    }
+
+    public void setRecommendedSchedule(Schedule recommendedSchedule) {
+        this.recommendedSchedule = recommendedSchedule;
     }
 
     public Course getRecommendedCourse() {
