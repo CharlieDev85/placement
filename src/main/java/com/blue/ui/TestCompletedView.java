@@ -150,8 +150,8 @@ public class TestCompletedView extends VerticalLayout {
             if (recommendation.getRecommendedCourse() != null) {
                 course = recommendation.getRecommendedCourse().getDisplayName();
             }
-            if (recommendation.getScheduleChosen() != null) {
-                schedule = recommendation.getScheduleChosen().getDisplayName();
+            if (recommendation.getRecommendedSchedule() != null) {
+                schedule = recommendation.getRecommendedSchedule().getDisplayName();
             }
             if (recommendation.getStartingDate() != null) {
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d 'de' MMMM, yyyy", new Locale("es", "ES"));
@@ -187,8 +187,8 @@ public class TestCompletedView extends VerticalLayout {
             if (recommendation.getRecommendedCourse() != null) {
                 course = recommendation.getRecommendedCourse().getDisplayName();
             }
-            if (recommendation.getScheduleChosen() != null) {
-                schedule = recommendation.getScheduleChosen().getDisplayName();
+            if (recommendation.getRecommendedSchedule() != null) {
+                schedule = recommendation.getRecommendedSchedule().getDisplayName();
             }
             if (recommendation.getStartingDate() != null) {
                 DateTimeFormatter formatter = DateTimeFormatter.ofPattern("d 'de' MMMM, yyyy", new Locale("es", "ES"));

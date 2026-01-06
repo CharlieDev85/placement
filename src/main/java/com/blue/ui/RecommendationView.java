@@ -40,6 +40,7 @@ public class RecommendationView extends VerticalLayout {
     //filters
     private TextField resultFilter = new TextField();
     private ComboBox<Schedule> scheduleFilter = new ComboBox<>();
+    private ComboBox<Schedule> recommendedScheduleFilter = new ComboBox<>();
     private ComboBox<Course> courseFilter = new ComboBox<>();
 
     @Autowired
@@ -68,19 +69,25 @@ public class RecommendationView extends VerticalLayout {
         scheduleFilter.setPlaceholder("Filter by Schedule");
         scheduleFilter.setItems(Schedule.values());
         scheduleFilter.setItemLabelGenerator(Schedule::getDisplayName);
+        recommendedScheduleFilter = new ComboBox<>();
+        recommendedScheduleFilter.setPlaceholder("Filter by Recommended Schedule");
+        recommendedScheduleFilter.setItems(Schedule.values());
+        recommendedScheduleFilter.setItemLabelGenerator(Schedule::getDisplayName);
         courseFilter = new ComboBox<>();
         courseFilter.setPlaceholder("Filter by Course");
         courseFilter.setItems(Course.values());
         courseFilter.setItemLabelGenerator(Course::getDisplayName);
-        HorizontalLayout filters = new HorizontalLayout(resultFilter, scheduleFilter, courseFilter);
+        HorizontalLayout filters = new HorizontalLayout(resultFilter, scheduleFilter, recommendedScheduleFilter, courseFilter);
 
         resultFilter.addValueChangeListener(e -> applyFilters());
         scheduleFilter.addValueChangeListener(e -> applyFilters());
+        recommendedScheduleFilter.addValueChangeListener(e -> applyFilters());
         courseFilter.addValueChangeListener(e -> applyFilters());
 
 
         grid.addColumn(Recommendation::getResult).setHeader("Result");
         grid.addColumn(r -> r.getScheduleChosen() != null ? r.getScheduleChosen().getDisplayName() : "").setHeader("Schedule");
+        grid.addColumn(r -> r.getRecommendedSchedule() != null ? r.getRecommendedSchedule().getDisplayName() : "").setHeader("Recommended Schedule");
         grid.addColumn(r -> r.getRecommendedCourse() != null ? r.getRecommendedCourse().getDisplayName() : "").setHeader("Course");
         grid.addColumn(r -> {
             LocalDate date = r.getStartingDate();
@@ -123,6 +130,11 @@ public class RecommendationView extends VerticalLayout {
         scheduleCombo.setItemLabelGenerator(Schedule::getDisplayName);
         scheduleCombo.setValue(recommendation.getScheduleChosen());
 
+        ComboBox<Schedule> recommendedScheduleCombo = new ComboBox<>("Recommended Schedule");
+        recommendedScheduleCombo.setItems(Schedule.values());
+        recommendedScheduleCombo.setItemLabelGenerator(Schedule::getDisplayName);
+        recommendedScheduleCombo.setValue(recommendation.getRecommendedSchedule());
+
         ComboBox<Course> courseCombo = new ComboBox<>("Course", Course.values());
         courseCombo.setItemLabelGenerator(Course::getDisplayName);
         courseCombo.setItems(Course.values());
@@ -154,6 +166,7 @@ public class RecommendationView extends VerticalLayout {
 
             recommendation.setResult(resultCombo.getValue());
             recommendation.setScheduleChosen(scheduleCombo.getValue());
+            recommendation.setRecommendedSchedule(recommendedScheduleCombo.getValue());
             recommendation.setRecommendedCourse(courseCombo.getValue());
             recommendation.setStartingDate(startDateField.getValue());
             Double input = percentageField.getValue();
@@ -182,7 +195,7 @@ public class RecommendationView extends VerticalLayout {
         Button cancel = new Button("Cancel", e -> dialog.close());
 
         HorizontalLayout actions = new HorizontalLayout(save, delete, cancel);
-        VerticalLayout layout = new VerticalLayout(resultCombo, scheduleCombo, courseCombo, startDateField, percentageField, actions);
+        VerticalLayout layout = new VerticalLayout(resultCombo, scheduleCombo, recommendedScheduleCombo, courseCombo, startDateField, percentageField, actions);
         dialog.removeAll();
         dialog.add(layout);
         dialog.open();
@@ -194,6 +207,7 @@ public class RecommendationView extends VerticalLayout {
                 .filter(rec -> resultFilter.isEmpty() ||
                         (rec.getResult() != null && rec.getResult().name().toLowerCase().contains(resultFilter.getValue().toLowerCase())))
                 .filter(rec -> scheduleFilter.isEmpty() || rec.getScheduleChosen() == scheduleFilter.getValue())
+                .filter(rec -> recommendedScheduleFilter.isEmpty() || rec.getRecommendedSchedule() == recommendedScheduleFilter.getValue())
                 .filter(rec -> courseFilter.isEmpty() || rec.getRecommendedCourse() == courseFilter.getValue())
                 .toList();
 
