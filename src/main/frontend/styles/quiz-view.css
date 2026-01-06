@@ -22,3 +22,30 @@
 .quiz-options {
     margin-bottom: 1.5rem;
 }
+
+.quiz-timer {
+    align-self: center;
+    background-color: #eef2f7;
+    border-radius: 999px;
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin: 0.5rem 0 1rem;
+    padding: 0.5rem 1.25rem;
+    text-align: center;
+    width: fit-content;
+}
+
+.quiz-timer.timer-green {
+    color: #0f5132;
+    background-color: #d1e7dd;
+}
+
+.quiz-timer.timer-yellow {
+    color: #664d03;
+    background-color: #fff3cd;
+}
+
+.quiz-timer.timer-red {
+    color: #842029;
+    background-color: #f8d7da;
+}
