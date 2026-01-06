@@ -21,6 +21,7 @@ import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.progressbar.ProgressBar;
+import com.vaadin.flow.component.page.Push;
 import com.vaadin.flow.component.radiobutton.RadioButtonGroup;
 import com.vaadin.flow.router.Route;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +35,7 @@ import java.util.concurrent.TimeUnit;
 
 @Route("quiz")
 @CssImport("./styles/quiz-view.css")
+@Push
 public class QuizView extends VerticalLayout {
     private static final int TIMER_TOTAL_SECONDS = 30 * 60;
     private static final int TIMER_YELLOW_THRESHOLD = 10 * 60;
