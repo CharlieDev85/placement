@@ -66,7 +66,7 @@ public class RecommendationView extends VerticalLayout {
         resultFilter = new TextField();
         resultFilter.setPlaceholder("Filter by Result");
         scheduleFilter = new ComboBox<>();
-        scheduleFilter.setPlaceholder("Filter by Schedule");
+        scheduleFilter.setPlaceholder("Filter by Schedule Chosen");
         scheduleFilter.setItems(Schedule.values());
         scheduleFilter.setItemLabelGenerator(Schedule::getDisplayName);
         recommendedScheduleFilter = new ComboBox<>();
@@ -86,9 +86,10 @@ public class RecommendationView extends VerticalLayout {
 
 
         grid.addColumn(Recommendation::getResult).setHeader("Result");
-        grid.addColumn(r -> r.getScheduleChosen() != null ? r.getScheduleChosen().getDisplayName() : "").setHeader("Schedule");
-        grid.addColumn(r -> r.getRecommendedSchedule() != null ? r.getRecommendedSchedule().getDisplayName() : "").setHeader("Recommended Schedule");
+        grid.addColumn(r -> r.getScheduleChosen() != null ? r.getScheduleChosen().getDisplayName() : "").setHeader("Schedule chosen");
         grid.addColumn(r -> r.getRecommendedCourse() != null ? r.getRecommendedCourse().getDisplayName() : "").setHeader("Course");
+        grid.addColumn(r -> r.getRecommendedSchedule() != null ? r.getRecommendedSchedule().getDisplayName() : "").setHeader("Recommended Schedule");
+
         grid.addColumn(r -> {
             LocalDate date = r.getStartingDate();
             return date != null ? date.format(formatter) : "";
