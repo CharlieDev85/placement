@@ -7,6 +7,7 @@ import com.blue.app.service.ResponseService;
 import com.blue.app.session.AttemptSession;
 import com.blue.app.session.StudentSession;
 import com.vaadin.flow.component.AttachEvent;
+import com.vaadin.flow.component.DetachEvent;
 import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
@@ -27,10 +28,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 
 @Route("quiz")
 @CssImport("./styles/quiz-view.css")
 public class QuizView extends VerticalLayout {
+    private static final int TIMER_TOTAL_SECONDS = 30 * 60;
+    private static final int TIMER_YELLOW_THRESHOLD = 10 * 60;
+    private static final int TIMER_RED_THRESHOLD = 3 * 60;
     private final StudentSession studentSession;
     private final AttemptSession attemptSession;
     private final QuizService quizService;
@@ -48,9 +55,14 @@ public class QuizView extends VerticalLayout {
     private Button nextBtn;
     private Button finishBtn;
     private final ProgressBar progressBar;
+    private final Div timerContainer;
+    private final Span timerText;
 
     //
     private UI ui;
+    private ScheduledExecutorService timerService;
+    private int remainingSeconds = TIMER_TOTAL_SECONDS;
+    private boolean completionTriggered;
 
     @Autowired
     private AttemptService attemptService;
@@ -66,6 +78,14 @@ public class QuizView extends VerticalLayout {
             // Only create the Attempt once per session/view load
             attempt = attemptService.createAttempt(studentSession.getStudent(), quiz);
         }
+        ui = attachEvent.getUI();
+        startTimer();
+    }
+
+    @Override
+    protected void onDetach(DetachEvent detachEvent) {
+        super.onDetach(detachEvent);
+        stopTimer();
     }
 
 
@@ -101,6 +121,10 @@ public class QuizView extends VerticalLayout {
         questionTitle = new H2("Question Base");
         questionText = new Span();
         questionText.addClassName("quiz-question");
+
+        timerText = new Span();
+        timerContainer = new Div(timerText);
+        timerContainer.addClassName("quiz-timer");
 
         // Options
         options = new RadioButtonGroup<>();
@@ -145,6 +169,7 @@ public class QuizView extends VerticalLayout {
         showQuestion(currentQuestion);//updates the card with the first question
 
         add(studentInfo);
+        add(timerContainer);
         add(progressBar);
         add(card);
 
@@ -207,6 +232,8 @@ public class QuizView extends VerticalLayout {
     }
 
     private void finishTest(){
+        completionTriggered = true;
+        stopTimer();
         completeAttempt();
         finishBtn.getUI().ifPresent(ui ->
                 ui.navigate("test-completed"));
@@ -220,7 +247,64 @@ public class QuizView extends VerticalLayout {
         attemptService.save(attempt);
     }
 
+    private void startTimer() {
+        if (timerService != null) {
+            return;
+        }
+        updateTimerDisplay();
+        timerService = Executors.newSingleThreadScheduledExecutor();
+        timerService.scheduleAtFixedRate(() -> {
+            if (completionTriggered) {
+                return;
+            }
+            remainingSeconds = Math.max(remainingSeconds - 1, 0);
+            ui.access(() -> {
+                updateTimerDisplay();
+                if (remainingSeconds <= 0 && !completionTriggered) {
+                    handleTimeExpired();
+                }
+            });
+        }, 1, 1, TimeUnit.SECONDS);
+    }
+
+    private void stopTimer() {
+        if (timerService != null) {
+            timerService.shutdownNow();
+            timerService = null;
+        }
+    }
+
+    private void updateTimerDisplay() {
+        timerText.setText("⏳ " + formatTime(remainingSeconds));
+        updateTimerStyles();
+    }
+
+    private void updateTimerStyles() {
+        timerContainer.removeClassNames("timer-green", "timer-yellow", "timer-red");
+        if (remainingSeconds <= TIMER_RED_THRESHOLD) {
+            timerContainer.addClassName("timer-red");
+        } else if (remainingSeconds <= TIMER_YELLOW_THRESHOLD) {
+            timerContainer.addClassName("timer-yellow");
+        } else {
+            timerContainer.addClassName("timer-green");
+        }
+    }
+
+    private String formatTime(int totalSeconds) {
+        int minutes = totalSeconds / 60;
+        int seconds = totalSeconds % 60;
+        return String.format("%02d:%02d", minutes, seconds);
+    }
+
+    private void handleTimeExpired() {
+        completionTriggered = true;
+        stopTimer();
+        if (options.getValue() != null && responses.size() == currentQuestion) {
+            saveResponse();
+        }
+        Notification.show("¡Tiempo terminado! Enviamos tu test automáticamente. ¡Gracias por tu esfuerzo!",
+                5000, Notification.Position.MIDDLE);
+        finishTest();
+    }
 
 }
-
-
