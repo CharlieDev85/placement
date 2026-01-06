@@ -65,6 +65,10 @@ public class Attempts extends VerticalLayout {
         attemptGrid.addColumn(attempt -> formatPercent(attempt.getScoreB2()))
                 .setHeader("B2")
                 .setAutoWidth(true);
+
+        attemptGrid.addColumn(this::formatResult)
+                .setHeader("Result")
+                .setAutoWidth(true);
     }
 
     private void loadAttempts() {
@@ -75,5 +79,12 @@ public class Attempts extends VerticalLayout {
     private String formatPercent(java.math.BigDecimal value) {
         if (value == null) return "-";
         return NumberFormat.getPercentInstance(Locale.US).format(value);
+    }
+
+    private String formatResult(Attempt attempt) {
+        if (attempt.getResult() == null) {
+            return "-";
+        }
+        return attempt.getResult().getDisplayName();
     }
 }
