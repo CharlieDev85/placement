@@ -55,9 +55,9 @@ public class QuizView extends VerticalLayout {
     //ui elements
     private Button nextBtn;
     private Button finishBtn;
-    private final ProgressBar progressBar;
-    private final Div timerContainer;
-    private final Span timerText;
+    private ProgressBar progressBar;
+    private Div timerContainer;
+    private Span timerText;
 
     //
     private UI ui;
