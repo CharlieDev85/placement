@@ -55,6 +55,22 @@ public class TestCompletedView extends VerticalLayout {
         Student student = studentSession.getStudent();
         Attempt attempt = attemptSession.getAttempt(); // implement this
 
+        if (student == null) {
+            getUI().ifPresent(ui -> ui.navigate("student-form"));
+            return;
+        }
+
+        if (attempt == null) {
+            H1 missingTitle = new H1("No pudimos cargar tu resultado");
+            Span missingCopy = new Span("Vuelve a iniciar el test para ver tu recomendación.");
+            Button restartButton = new Button("Ir al formulario");
+            restartButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
+            restartButton.addClickListener(event ->
+                    event.getSource().getUI().ifPresent(ui -> ui.navigate("student-form")));
+            add(missingTitle, missingCopy, restartButton);
+            return;
+        }
+
         H1 congrats = new H1("🎉 Congratulations, " + toProperCase(student.getName()) + "!");
         Span subtitle = new Span("Has completado el examen de ubicación, tu resultado es:");
         subtitle.addClassName("result-subtitle");
