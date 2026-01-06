@@ -40,7 +40,7 @@ public class TestCompletedView extends VerticalLayout {
             Executors.newSingleThreadScheduledExecutor();
     private final RecommendationRepository recommendationRepository;
     private final RecommendationMadeService recommendationMadeService;
-    private final Recommendation recommendation;
+    private Recommendation recommendation;
 
     @Autowired
     public TestCompletedView(StudentSession studentSession, AttemptService attemptService, AttemptSession attemptSession,
