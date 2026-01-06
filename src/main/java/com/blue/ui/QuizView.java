@@ -105,6 +105,10 @@ public class QuizView extends VerticalLayout {
 
         //get Student from Session
         Student student = this.studentSession.getStudent();
+        if (student == null) {
+            getUI().ifPresent(ui -> ui.navigate("student-form"));
+            return;
+        }
         Span studentInfo = new Span("👤 " + student.getName() + " | ✉️ " + student.getEmail());
 
 
