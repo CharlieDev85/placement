@@ -131,15 +131,17 @@ public class RecommendationView extends VerticalLayout {
         scheduleCombo.setItemLabelGenerator(Schedule::getDisplayName);
         scheduleCombo.setValue(recommendation.getScheduleChosen());
 
-        ComboBox<Schedule> recommendedScheduleCombo = new ComboBox<>("Recommended Schedule");
-        recommendedScheduleCombo.setItems(Schedule.values());
-        recommendedScheduleCombo.setItemLabelGenerator(Schedule::getDisplayName);
-        recommendedScheduleCombo.setValue(recommendation.getRecommendedSchedule());
+
 
         ComboBox<Course> courseCombo = new ComboBox<>("Course", Course.values());
         courseCombo.setItemLabelGenerator(Course::getDisplayName);
         courseCombo.setItems(Course.values());
         courseCombo.setValue(recommendation.getRecommendedCourse());
+
+        ComboBox<Schedule> recommendedScheduleCombo = new ComboBox<>("Recommended Schedule");
+        recommendedScheduleCombo.setItems(Schedule.values());
+        recommendedScheduleCombo.setItemLabelGenerator(Schedule::getDisplayName);
+        recommendedScheduleCombo.setValue(recommendation.getRecommendedSchedule());
 
         DatePicker startDateField = new DatePicker("Starting Date");
         startDateField.setLocale(Locale.ENGLISH);
