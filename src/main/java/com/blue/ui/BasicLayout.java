@@ -39,7 +39,8 @@ public class BasicLayout extends AppLayout {
                 new SideNavItem("Quiz", "/quiz", VaadinIcon.USER_HEART.create()),
                 new SideNavItem("Admin", "/admin",VaadinIcon.BELL.create()),
                 new SideNavItem("Attempts", "/attempts",VaadinIcon.GLASS.create()),
-                new SideNavItem("Recommendations", "/recommendations", VaadinIcon.CALC_BOOK.create()));
+                new SideNavItem("Recommendations", "/recommendations", VaadinIcon.CALC_BOOK.create()),
+                new SideNavItem("Recommendations Made", "/recommendations-made", VaadinIcon.CLIPBOARD_CHECK.create()));
         return sideNav;
     }
 
