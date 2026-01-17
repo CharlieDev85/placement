@@ -15,7 +15,7 @@ public class LandingView extends VerticalLayout {
         setJustifyContentMode(JustifyContentMode.CENTER);
         setSizeFull();
 
-        Image logo = new Image("img/blue-academy-logo-landing.svg", "Logo");
+        Image logo = new Image("logos/blue-academy-logo-landing.svg", "Logo");
         logo.setHeight("100px");
 
         H1 title = new H1("Test Your English Skills!");
